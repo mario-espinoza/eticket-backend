@@ -10,4 +10,4 @@ var addressSchema = mongoose.Schema({
   region: {type: String, required:true}
 });
 
-module.exports = mongoose.model('addresses', clientSchema );
+module.exports = mongoose.model('addresses', addressSchema );

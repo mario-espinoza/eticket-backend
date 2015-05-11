@@ -9,4 +9,4 @@ var saleSchema = mongoose.Schema({
   client: {type: Number, required:true}
 });
 
-module.exports = mongoose.model('sales', productSchema );
+module.exports = mongoose.model('sales', saleSchema );

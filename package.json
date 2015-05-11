@@ -1,7 +1,7 @@
 {
-  "name": "unab-rest-and-mobile-example",
+  "name": "eticket-backend",
   "version": "0.1.0",
-  "description": "UNAB first REST sample",
+  "description": "Backend aplicación eTicket",
   "author": "@mespinozas",
   "main": "index.js",
   "scripts": {

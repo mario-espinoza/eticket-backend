@@ -3,10 +3,12 @@
 var mongoose = require('mongoose');
 
 var clientSchema = mongoose.Schema({
-  nombre: {type: String, required:true},
-  apePat: {type: String, required:true},
-  apeMat: {type: String, required:true},
-  telephone: {type: String, required:true},
+  name: {type: String, required:true},
+  lname1: {type: String, required:true},
+  lname2: {type: String, required:true},
+  phone: {type: String, required:true},
+  password: {type: String, required:true},
+  mail: {type: String, required:true}
 });
 
 module.exports = mongoose.model('clients', clientSchema );

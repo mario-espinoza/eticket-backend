@@ -8,7 +8,7 @@ var clientSchema = mongoose.Schema({
   lname2: {type: String, required:true},
   phone: {type: String, required:true},
   password: {type: String, required:true},
-  mail: {type: String, required:true}
+  mail: {type: String, index: {unique: true, dropDups: true}}
 });
 
 module.exports = mongoose.model('clients', clientSchema );

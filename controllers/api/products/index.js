@@ -20,11 +20,11 @@ module.exports = function (router) {
 
   });
 
-  router.get('/:id', function (req, res) {
+  router.get('/:code', function (req, res) {
 
-    var id = req.params.id;
+    var code = req.params.code;
 
-    productsLib.getById(id, function(error, product){
+    productsLib.getByCode(id, function(error, product){
 
       if (error){
         if (error.message === 'NOT_FOUND'){

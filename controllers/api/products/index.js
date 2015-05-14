@@ -24,7 +24,7 @@ module.exports = function (router) {
 
     var code = req.params.code;
 
-    productsLib.getByCode(id, function(error, product){
+    productsLib.getByCode(code, function(error, product){
 
       if (error){
         if (error.message === 'NOT_FOUND'){

@@ -20,11 +20,29 @@ module.exports = function (router) {
 
   });
 
-  router.get('/:id', function (req, res) {
+  /*router.get('/:_id', function (req, res) {
 
-    var id = req.params.id;
+    var id = req.params._id;
 
     clientsLib.getById(id, function(error, client){
+
+      if (error){
+        if (error.message === 'NOT_FOUND'){
+          return res.status(404).end();
+        }
+        return res.status(500).json(error).end();
+      }
+
+      res.status(200).json(client).end();
+
+    });
+  });
+  */
+  router.get('/:_mail', function (req, res) {
+
+    var mail = req.params._mail;
+
+    clientsLib.getByMail(mail, function(error, client){
 
       if (error){
         if (error.message === 'NOT_FOUND'){

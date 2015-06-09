@@ -57,7 +57,13 @@ module.exports = function (router) {
   });
 
   router.post('/', function (req, res) {
+      var data=req.body;
+      var username=data.username;
+      var password=data.password; //hash md5, over SSL
 
+      clientsLib.findOne( ){
+
+      });
     var newClient = req.body;
 
     clientsLib.create(newClient, function(error){
@@ -108,5 +114,23 @@ module.exports = function (router) {
     });
   });
 
+  router.get('/:_mail/:_address', function (req, res) {
+
+    var mail = req.params._mail;
+    var address = req.params._address;
+
+    clientsLib.getByMail(mail, function(error, client){
+
+      if (error){
+        if (error.message === 'NOT_FOUND'){
+          return res.status(404).end();
+        }
+        return res.status(500).json(error).end();
+      }
+
+      res.status(200).json(client).end();
+
+    });
+  });
 
 };

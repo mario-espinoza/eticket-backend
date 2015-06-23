@@ -16,6 +16,7 @@
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.0",
     "mongoose": "^4.0.2",
+    "mongoose-bcrypt": "^1.1.1",
     "winston": "^1.0.0",
     "winston-mongodb": "^1.1.1"
   },

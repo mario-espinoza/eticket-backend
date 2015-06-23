@@ -37,8 +37,9 @@ clientSchema.pre('save', function(next) {
 
         // hash the password using our new salt
         bcrypt.hash(client._password, salt, function(err, hash) {
-            if (err) return next(err);
-
+            if (err) {
+                return next(err);
+            }
             // override the cleartext password with the hashed one
             client._password = hash;
             next();
@@ -48,7 +49,9 @@ clientSchema.pre('save', function(next) {
 
 clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this._password, function(err, isMatch) {
-        if (err) return cb(err);
+        if (err) {
+            return cb(err);
+        }
         cb(null, isMatch);
     });
 };

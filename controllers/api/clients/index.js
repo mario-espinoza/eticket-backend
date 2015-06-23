@@ -15,7 +15,7 @@ module.exports = function (router) {
 
     /*Version Hasheada*/
     router.post('/', function(req, res, next) {
-        var user = new DataModel.User();
+        var user = new clientsLib.ClientModel();
         user.username = req.body.username;
         user.booklist = [] ;
         bcrypt.hash(req.body.password, 10, function (err, hash) {
@@ -29,7 +29,7 @@ module.exports = function (router) {
 
     /*Version Hasheada*/
     router.post('/api/login', function(req, res, next) {
-        DataModel.User.findOne({username: { $in: [req.auth.username] } })
+        clientsLib.findOne({username: { $in: [req.auth.username] } })
         .select('password').select('username')
         .exec(function (err, user) {
             if (err) { return next(err); }

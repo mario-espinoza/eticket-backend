@@ -18,7 +18,7 @@ var clientSchema = new Schema({
        _county: {type: String, required:true},
        _city: {type: String, required:true},
        _region: {type: String, required:true}
-       }],
+       }]
 });
 
 clientSchema.pre('save', function(next) {

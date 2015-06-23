@@ -16,35 +16,35 @@ module.exports = function (router) {
         });
     });
 
-    /*Version Hasheada*/
-    router.post('/', function(req, res, next) {
-        var user = new clientsLib.ClientModel();
-        user.username = req.body.username;
-        user.booklist = [] ;
-        bcrypt.hash(req.body.password, 10, function (err, hash) {
-            user.password = hash;
-            user.save(function(err,user) {
-                if(err) { return(next(err)); }
-                res.status(200).send();
-            });
-        });
-    });
+    // /*Version Hasheada*/
+    // router.post('/', function(req, res, next) {
+    //     var user = new clientsLib.ClientModel();
+    //     user.username = req.body.username;
+    //     user.booklist = [] ;
+    //     bcrypt.hash(req.body.password, 10, function (err, hash) {
+    //         user.password = hash;
+    //         user.save(function(err,user) {
+    //             if(err) { return(next(err)); }
+    //             res.status(200).send();
+    //         });
+    //     });
+    // });
 
     /*Version Hasheada*/
-    router.post('/api/login', function(req, res, next) {
-        clientsLib.findOne({username: { $in: [req.auth.username] } })
-        .select('password').select('username')
-        .exec(function (err, user) {
-            if (err) { return next(err); }
-            if (!user) { return res.status(401).send(); }
-            bcrypt.compare(req.body.password, user.password, function (err, valid) {
-                if (err) { return next(err); }
-                if (!valid) { return res.status(401).send(); }
-                var token = jwt.encode({username: user.username}, mysecret.secret);
-                res.status(200).send(token);
-            });
-        });
-    });
+    // router.post('/api/login', function(req, res, next) {
+    //     clientsLib.findOne({username: { $in: [req.auth.username] } })
+    //     .select('password').select('username')
+    //     .exec(function (err, user) {
+    //         if (err) { return next(err); }
+    //         if (!user) { return res.status(401).send(); }
+    //         bcrypt.compare(req.body.password, user.password, function (err, valid) {
+    //             if (err) { return next(err); }
+    //             if (!valid) { return res.status(401).send(); }
+    //             var token = jwt.encode({username: user.username}, mysecret.secret);
+    //             res.status(200).send(token);
+    //         });
+    //     });
+    // });
 
     router.post('/', function (req, res) {
         var data=req.body;

@@ -1,6 +1,7 @@
 'use strict';
 
 var clientsLib = require('../../../lib/clientsLib');
+var mysecret = require('../../../config/secret');
 
 module.exports = function (router) {
     router.get('/', function (req, res) {

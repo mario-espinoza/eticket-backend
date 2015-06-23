@@ -25,7 +25,9 @@ clientSchema.pre('save', function(next) {
     var client = this;
 
     // only hash the password if it has been modified (or is new)
-    if (!client.isModified('_password')) return next();
+    if (!client.isModified('_password')) {
+        return next();
+    }
 
     // generate a salt
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {

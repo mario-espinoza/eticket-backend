@@ -1,8 +1,11 @@
 'use strict';
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    bcrypt = require('bcrypt'),
+    SALT_WORK_FACTOR = 10;;
 
-var clientSchema = mongoose.Schema({
+var clientSchema = new Schema({
   _name: {type: String, required:true},
   _firstLastame: {type: String, required:true},
   _secondLastame: {type: String, required:true},
@@ -17,5 +20,33 @@ var clientSchema = mongoose.Schema({
        _region: {type: String, required:true}
        }],
 });
+
+clientSchema.pre('save', function(next) {
+    var user = this;
+
+    // only hash the password if it has been modified (or is new)
+    if (!user.isModified('_password')) return next();
+
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        // hash the password using our new salt
+        bcrypt.hash(user._password, salt, function(err, hash) {
+            if (err) return next(err);
+
+            // override the cleartext password with the hashed one
+            user._password = hash;
+            next();
+        });
+    });
+});
+
+clientSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this._password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
 
 module.exports = mongoose.model('clients', clientSchema );

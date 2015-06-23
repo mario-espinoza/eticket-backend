@@ -2,6 +2,8 @@
 
 var clientsLib = require('../../../lib/clientsLib');
 var mysecret = require('../../../config/secret');
+var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 module.exports = function (router) {
     router.get('/', function (req, res) {

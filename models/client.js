@@ -23,7 +23,7 @@ var clientSchema = new Schema({
        _county: {type: String, required:true},
        _city: {type: String, required:true},
        _region: {type: String, required:true}
-       }]
+       }],
 
 // new properties
     loginAttempts: { type: Number, required: true, default: 0 },

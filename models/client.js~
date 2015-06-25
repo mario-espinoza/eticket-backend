@@ -141,7 +141,6 @@ clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
-=======
 var mongoose = require('mongoose');
 
 var clientSchema = mongoose.Schema({
@@ -190,5 +189,4 @@ clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
->>>>>>> 8138c36913f821d7f0f86cb0c5e69d3abe8c7994
 module.exports = mongoose.model('clients', clientSchema );

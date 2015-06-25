@@ -20,23 +20,11 @@ module.exports = function (router) {
 
   });
 
-
   router.get('/:code', function (req, res) {
 
     var code = req.params.code;
 
     productsLib.getByCode(code, function(error, product){
-
-  router.get('/:id', function (req, res) {
-
-  router.get('/:code', function (req, res) {
-
-
-    var code = req.params.code;
-    productsLib.getById(id, function(error, product){
-
-    productsLib.getByCode(code, function(error, product){
-
 
       if (error){
         if (error.message === 'NOT_FOUND'){

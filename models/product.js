@@ -8,9 +8,6 @@ var productSchema = mongoose.Schema({
   _code: {type: String, index: {unique: true, dropDups: true}},
   _tags: [{ type: String, index: true }]
 
-  name:  {type: String, required:true},
-  price: {type: Number, required:true},
-  code: {type: String, index: {unique: true, dropDups: true}}
 
 });
 

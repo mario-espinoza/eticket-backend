@@ -1,5 +1,6 @@
 'use strict';
 
+<<<<<<< HEAD
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
@@ -139,4 +140,17 @@ clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+=======
+var mongoose = require('mongoose');
+
+var clientSchema = mongoose.Schema({
+  name: {type: String, required:true},
+  lname1: {type: String, required:true},
+  lname2: {type: String, required:true},
+  phone: {type: String, required:true},
+  password: {type: String, required:true},
+  mail: {type: String, index: {unique: true, dropDups: true}}
+});
+
+>>>>>>> f211bc13c54327cedf93d35f9d847b8411665a09
 module.exports = mongoose.model('clients', clientSchema );

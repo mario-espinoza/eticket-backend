@@ -1,20 +1,14 @@
 'use strict';
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8138c36913f821d7f0f86cb0c5e69d3abe8c7994
+
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
     SALT_WORK_FACTOR = 10;
-<<<<<<< HEAD
     // these values can be whatever you want - we're defaulting to a
     // max of 5 attempts, resulting in a 2 hour lock
     MAX_LOGIN_ATTEMPTS = 5,
     LOCK_TIME = 2 * 60 * 60 * 1000;
-=======
->>>>>>> 8138c36913f821d7f0f86cb0c5e69d3abe8c7994
 
 var clientSchema = new Schema({
   _name: {type: String, required:true},
@@ -30,7 +24,7 @@ var clientSchema = new Schema({
        _city: {type: String, required:true},
        _region: {type: String, required:true}
        }]
-<<<<<<< HEAD
+
 // new properties
     loginAttempts: { type: Number, required: true, default: 0 },
     lockUntil: { type: Number }
@@ -147,7 +141,6 @@ clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
-=======
 var mongoose = require('mongoose');
 
 var clientSchema = mongoose.Schema({
@@ -159,8 +152,6 @@ var clientSchema = mongoose.Schema({
   mail: {type: String, index: {unique: true, dropDups: true}}
 });
 
->>>>>>> f211bc13c54327cedf93d35f9d847b8411665a09
-=======
 });
 
 clientSchema.pre('save', function(next) {
@@ -198,5 +189,4 @@ clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
->>>>>>> 8138c36913f821d7f0f86cb0c5e69d3abe8c7994
 module.exports = mongoose.model('clients', clientSchema );

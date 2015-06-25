@@ -4,6 +4,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
     SALT_WORK_FACTOR = 10;
+    // these values can be whatever you want - we're defaulting to a
+    // max of 5 attempts, resulting in a 2 hour lock
+    MAX_LOGIN_ATTEMPTS = 5,
+    LOCK_TIME = 2 * 60 * 60 * 1000;
 
 var clientSchema = new Schema({
   _name: {type: String, required:true},
@@ -22,6 +26,12 @@ var clientSchema = new Schema({
 // new properties
     loginAttempts: { type: Number, required: true, default: 0 },
     lockUntil: { type: Number }
+});
+
+
+clientSchema.virtual('isLocked').get(function() {
+    // check for a future lockUntil timestamp
+    return !!(this.lockUntil && this.lockUntil > Date.now());
 });
 
 clientSchema.pre('save', function(next) {
@@ -49,6 +59,76 @@ clientSchema.pre('save', function(next) {
         });
     });
 });
+
+clientSchema.methods.incLoginAttempts = function(cb) {
+    // if we have a previous lock that has expired, restart at 1
+    if (this.lockUntil && this.lockUntil < Date.now()) {
+        return this.update({
+            $set: { loginAttempts: 1 },
+            $unset: { lockUntil: 1 }
+        }, cb);
+    }
+    // otherwise we're incrementing
+    var updates = { $inc: { loginAttempts: 1 } };
+    // lock the account if we've reached max attempts and it's not locked already
+    if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
+        updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+    }
+    return this.update(updates, cb);
+};
+
+// expose enum on the model, and provide an internal convenience reference 
+var reasons = clientSchema.statics.failedLogin = {
+    NOT_FOUND: 0,
+    PASSWORD_INCORRECT: 1,
+    MAX_ATTEMPTS: 2
+};
+
+clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
+    this.findOne({ clientname: clientname }, function(err, client) {
+        if (err) return cb(err);
+
+        // make sure the client exists
+        if (!client) {
+            return cb(null, null, reasons.NOT_FOUND);
+        }
+
+        // check if the account is currently locked
+        if (client.isLocked) {
+            // just increment login attempts if account is already locked
+            return client.incLoginAttempts(function(err) {
+                if (err) return cb(err);
+                return cb(null, null, reasons.MAX_ATTEMPTS);
+            });
+        }
+
+        // test for a matching password
+        client.comparePassword(password, function(err, isMatch) {
+            if (err) return cb(err);
+
+            // check if the password was a match
+            if (isMatch) {
+                // if there's no lock or failed attempts, just return the client
+                if (!client.loginAttempts && !client.lockUntil) return cb(null, client);
+                // reset attempts and lock info
+                var updates = {
+                    $set: { loginAttempts: 0 },
+                    $unset: { lockUntil: 1 }
+                };
+                return client.update(updates, function(err) {
+                    if (err) return cb(err);
+                    return cb(null, client);
+                });
+            }
+
+            // password is incorrect, so increment login attempts before responding
+            client.incLoginAttempts(function(err) {
+                if (err) return cb(err);
+                return cb(null, null, reasons.PASSWORD_INCORRECT);
+            });
+        });
+    });
+};
 
 clientSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this._password, function(err, isMatch) {

@@ -97,9 +97,7 @@ var reasons = clientSchema.statics.failedLogin = {
 
 clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
     this.findOne({ clientname: clientname }, function(err, client) {
-        if (err) {
-		return cb(err);
-	}
+        if (err) return cb(err);
 
         // make sure the client exists
         if (!client) {
@@ -110,18 +108,14 @@ clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
         if (client.isLocked) {
             // just increment login attempts if account is already locked
             return client.incLoginAttempts(function(err) {
-                if (err) {
-			return cb(err);
-		}
+                if (err) return cb(err);
                 return cb(null, null, reasons.MAX_ATTEMPTS);
             });
         }
 
         // test for a matching password
         client.comparePassword(password, function(err, isMatch) {
-           if (err) {
-		return cb(err);
-	   }
+            if (err) return cb(err);
 
             // check if the password was a match
             if (isMatch) {
@@ -133,18 +127,14 @@ clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
                     $unset: { lockUntil: 1 }
                 };
                 return client.update(updates, function(err) {
-                    if (err) {
-			return cb(err);
-		    }
+                    if (err) return cb(err);
                     return cb(null, client);
                 });
             }
 
             // password is incorrect, so increment login attempts before responding
             client.incLoginAttempts(function(err) {
-                if (err) {
-			return cb(err);
-		}
+                if (err) return cb(err);
                 return cb(null, null, reasons.PASSWORD_INCORRECT);
             });
         });

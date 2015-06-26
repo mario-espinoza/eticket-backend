@@ -62,15 +62,6 @@ clientSchema.pre('save', function(next) {
     });
 });
 
-clientSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this._password, function(err, isMatch) {
-        if (err) {
-            return cb(err);
-        }
-        cb(null, isMatch);
-    });
-};
-
 clientSchema.methods.incLoginAttempts = function(cb) {
     // if we have a previous lock that has expired, restart at 1
     if (this.lockUntil && this.lockUntil < Date.now()) {
@@ -140,5 +131,15 @@ clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
         });
     });
 };
+
+clientSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this._password, function(err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, isMatch);
+    });
+};
+
 
 module.exports = mongoose.model('clients', clientSchema );

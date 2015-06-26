@@ -126,9 +126,7 @@ clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
             // check if the password was a match
             if (isMatch) {
                 // if there's no lock or failed attempts, just return the client
-                if (!client.loginAttempts && !client.lockUntil) {
-			return cb(null, client);
-		}
+                if (!client.loginAttempts && !client.lockUntil) return cb(null, client);
                 // reset attempts and lock info
                 var updates = {
                     $set: { loginAttempts: 0 },

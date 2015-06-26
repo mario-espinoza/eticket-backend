@@ -118,7 +118,7 @@ module.exports = function (router) {
             res.status(200).json(client).end();
         });
     });
-/*var mysecret = require('../../../config/secret');
+var mysecret = require('../../../config/secret');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
@@ -131,7 +131,7 @@ module.exports = function (router) {
             }
             res.status(200).json(results).end();
         });
-    }); */
+    });
 
     // /*Version Hasheada*/
     // router.post('/', function(req, res, next) {
@@ -163,7 +163,7 @@ module.exports = function (router) {
     //     });
     // });
 
-    /*router.post('/', function (req, res)
+    router.post('/', function (req, res) {
         var data=req.body;
         var username=data.username;
         var password=data.password; //hash md5, over SSL
@@ -234,5 +234,5 @@ module.exports = function (router) {
             }
             res.status(200).json(client).end();
         });
-    });*/
+    });
 };

@@ -9,6 +9,11 @@ var salesProductSchema = mongoose.Schema({
   _product: {type: String, required:true},
   _client: {type: Number, required:true}
 
+  sale:  {type: Number, required:true},
+  units: {type: Number, required:true},
+  product: {type: String, required:true},
+  client: {type: Number, required:true}
+
 });
 
 module.exports = mongoose.model('salesProducts', salesProductSchema );

@@ -15,6 +15,11 @@ var saleSchema = mongoose.Schema({
         _discount:  {type: Number, required:true},
         _cost: {type: Number, required:true}
         }]
+  date:  {type: Date, default: Date.now},
+  store: {type: String, required:true},
+  status: {type: String, required:true},
+  client: {type: String, required:true},
+  total: {type: Number, required:true}
 
 });
 

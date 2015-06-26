@@ -1,6 +1,8 @@
 'use strict';
 
 var clientsLib = require('../../../lib/clientsLib');
+<<<<<<< HEAD
+<<<<<<< HEAD
 var mysecret = require('../../../config/secret');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
@@ -118,9 +120,12 @@ module.exports = function (router) {
             res.status(200).json(client).end();
         });
     });
+=======
+=======
 var mysecret = require('../../../config/secret');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+>>>>>>> 8138c36913f821d7f0f86cb0c5e69d3abe8c7994
 
 module.exports = function (router) {
     router.get('/', function (req, res) {
@@ -222,6 +227,9 @@ module.exports = function (router) {
         });
     });
 
+<<<<<<< HEAD
+>>>>>>> f211bc13c54327cedf93d35f9d847b8411665a09
+=======
     router.get('/:_mail/:_address', function (req, res) {
         var mail = req.params._mail;
         var address = req.params._address;
@@ -235,4 +243,5 @@ module.exports = function (router) {
             res.status(200).json(client).end();
         });
     });
+>>>>>>> 8138c36913f821d7f0f86cb0c5e69d3abe8c7994
 };

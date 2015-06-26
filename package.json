@@ -8,27 +8,15 @@
     "test": "grunt test"
   },
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^0.8.3",
     "engine-munger": "^0.2.0",
     "express": "^4.3.0",
     "jsonwebtoken": "^5.0.2",
-=======
-    "engine-munger": "^0.2.0",
-    "express": "^4.3.0",
-<<<<<<< HEAD
-    "jsonwebtoken": "^5.0.2",
-=======
->>>>>>> f211bc13c54327cedf93d35f9d847b8411665a09
->>>>>>> parent of 819d7b9... modificacion de errores
     "kraken-devtools": "^1.0.0",
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.0",
     "mongoose": "^4.0.2",
-<<<<<<< HEAD
     "mongoose-bcrypt": "^1.1.1",
-=======
->>>>>>> f211bc13c54327cedf93d35f9d847b8411665a09
     "winston": "^1.0.0",
     "winston-mongodb": "^1.1.1"
   },

@@ -27,5 +27,3 @@ node_modules
 #OSX
 .DS_Store
 docs
-
-*.js~

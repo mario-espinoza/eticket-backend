@@ -141,7 +141,4 @@ clientSchema.statics.getAuthenticated = function(clientname, password, cb) {
     });
 };
 
-
-
-
 module.exports = mongoose.model('clients', clientSchema );

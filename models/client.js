@@ -11,8 +11,8 @@ var mongoose = require('mongoose'),
 
 var clientSchema = new Schema({
   _name: {type: String, required:true},
-  _firstLastame: {type: String, required:true},
-  _secondLastame: {type: String, required:true},
+  _firstLastname: {type: String, required:true},
+  _secondLastname: {type: String, required:true},
   _phone: {type: String, required:true},
   _password: {type: String, required:true},
   _mail: {type: String, index: {unique: true, dropDups: true}},

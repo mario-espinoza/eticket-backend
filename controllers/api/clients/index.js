@@ -31,12 +31,14 @@
 /**********/
 'use strict';
 
+var secureApiLib = require('../../../lib/secureApiLib');
 var clientsLib = require('../../../lib/clientsLib');
 var mysecret = require('../../../config/secret');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
 module.exports = function (router) {
+    router.use('/', secureApiLib.jwtMiddleware);
     router.get('/', function (req, res) {
 	//If access token was not sent in the query string ej: api/login?who=google&access_token=wrwerwqer
         //Then return a 401

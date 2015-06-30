@@ -1,10 +1,11 @@
 'use strict';
 
+var secureApiLib = require('../../../lib/secureApiLib');
 var storesLib = require('../../../lib/storesLib');
 
 module.exports = function (router) {
-
-  router.get('/', function (req, res) {
+    router.use('/', secureApiLib.jwtMiddleware);
+    router.get('/', function (req, res) {
 
     storesLib.getAll(function(error, results){
 

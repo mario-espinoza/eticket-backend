@@ -67,10 +67,10 @@ module.exports = function (router) {
 
     router.post('/', function (req, res) {
         var data=req.body;
-        var username=data.username;
-        var password=data.password; //hash md5, over SSL
+        var username=data._username;
+        var password=data._password; //hash md5, over SSL
 
-        clientsLib.findOne(data.username, data.password, function(error, client){
+        clientsLib.findOne(data._username, data._password, function(error, client){
             if (error && error.message === 'NOT_FOUND'){
                 return res.status(401).json({message: 'USER_OR_PASSWORD_NOT_FOUND'}).end();
             }

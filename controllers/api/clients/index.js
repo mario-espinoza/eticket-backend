@@ -45,7 +45,7 @@ module.exports = function (router) {
         }
 
 	//Validate the access token with the third party (ej: google)
-        clientsLib.validateThirdPartyAccessToken(req.query.who, req.query.accesstoken, function(error){
+            clientsLib.validateThirdPartyAccessToken(req.query.who, req.query.accesstoken, function(error){
             if (error){
                 return res.status(401).end();
             }
@@ -72,7 +72,15 @@ module.exports = function (router) {
 
         clientsLib.findOne(data._username, data._password, function(error, client){
             if (error && error.message === 'NOT_FOUND'){
-                return res.status(401).json({message: 'USER_OR_PASSWORD_NOT_FOUND'}).end();
+                var newClient = data;
+
+                clientsLib.create(newClient, function(error){
+                    if (error){
+                        return res.status(500).json(error).end();
+                    }
+                    res.status(201).end();
+                });
+                //return res.status(401).json({message: 'USER_OR_PASSWORD_NOT_FOUND'}).end();
             }
             if (error){
                 return res.status(500).json(error).end();
@@ -83,14 +91,7 @@ module.exports = function (router) {
             });
         });
 
-        var newClient = req.body;
 
-        clientsLib.create(newClient, function(error){
-            if (error){
-                return res.status(500).json(error).end();
-            }
-            res.status(201).end();
-        });
     });
 
     router.get('/:_mail', function (req, res) {

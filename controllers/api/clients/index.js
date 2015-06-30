@@ -48,8 +48,8 @@ module.exports = function (router) {
 
     router.post('/', function (req, res) {
         var data=req.body;
-        var username=data.username;
-        var password=data.password; //hash md5, over SSL
+        var username=data._username;
+        var password=data._password; //hash md5, over SSL
 
         //clientsLib.findOne( ){
 
@@ -78,8 +78,8 @@ module.exports = function (router) {
         });
     });
 
-    router.put('/:id', function (req, res) {
-        var id = req.params.id;
+    router.put('/:_id', function (req, res) {
+        var id = req.params._id;
         var newData = req.body;
         clientsLib.update(id, newData, function(error, client){
             if (error){

@@ -71,16 +71,17 @@ module.exports = function (router) {
         var password=data._password; //hash md5, over SSL
 
         clientsLib.findOne(data._username, data._password, function(error, client){
-            if (error && error.message === 'NOT_FOUND'){
+            if (error){
+                if (error.message === 'NOT_FOUND'){
                 var newClient = data;
-
                 clientsLib.create(newClient, function(error){
                     if (error){
                         return res.status(500).json(error).end();
                     }
-                    res.status(201).end();
+                    return res.status(201).end();
                 });
-                //return res.status(401).json({message: 'USER_OR_PASSWORD_NOT_FOUND'}).end();
+                }
+                return res.status(401).json({message: 'USER_OR_PASSWORD_NOT_FOUND'}).end();
             }
             if (error){
                 return res.status(500).json(error).end();
@@ -90,8 +91,6 @@ module.exports = function (router) {
                 return res.status(201).json({'token': token}).end();
             });
         });
-
-
     });
 
     router.get('/:_mail', function (req, res) {
